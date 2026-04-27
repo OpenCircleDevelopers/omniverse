@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Calendar, Tag } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Calendar } from "lucide-react";
 import type { Post } from "@/lib/posts";
 import { Badge } from "@/components/ui/Badge";
 
@@ -14,67 +14,68 @@ export function BlogCard({
 }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: "easeOut" }}
-      whileHover={{ y: -4 }}
-      className="group h-full"
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      whileHover={{ y: -2 }}
+      className="group"
     >
       <Link
         href={`/blog/${post.slug}`}
-        className="relative block h-full overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-[0_12px_40px_-22px_rgba(0,0,0,0.35)] backdrop-blur transition hover:shadow-[0_18px_54px_-24px_rgba(0,0,0,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="grid gap-4 rounded-xl px-2 py-4 transition hover:bg-muted/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[140px_1fr] sm:items-start"
         aria-label={post.title}
       >
-        <div className="relative">
-          <div
-            className={cn(
-              "h-44 w-full bg-gradient-to-br",
-              post.cover.gradient,
-            )}
+        <div className="relative overflow-hidden rounded-xl border border-border/60 bg-muted/30">
+          <Image
+            src={post.thumbnail}
+            alt=""
+            width={1200}
+            height={800}
+            className="h-24 w-full object-cover sm:h-24"
+            sizes="(max-width: 640px) 100vw, 140px"
+            loading="lazy"
           />
-          <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100">
-            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
-          </div>
-          {post.featured ? (
-            <div className="absolute left-4 top-4">
-              <Badge className="bg-background/50 backdrop-blur border-border/60">
-                Featured
-              </Badge>
-            </div>
-          ) : null}
         </div>
 
-        <div className="flex h-[calc(100%-11rem)] flex-col gap-3 p-5">
-          <div className="flex items-center justify-between gap-3">
-            <Badge variant="soft" className="bg-card/60">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-2">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-muted/60 text-[10px] font-semibold text-foreground">
+                {post.author.avatarInitials}
+              </span>
+              <span className="font-medium text-foreground/90">
+                {post.author.name}
+              </span>
+            </span>
+            <span className="hidden sm:inline">·</span>
+            <span className="inline-flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5" />
+              {formatDate(post.date)}
+            </span>
+            <span className="hidden sm:inline">·</span>
+            <span className="hidden sm:inline">{post.readingMinutes} min read</span>
+            <Badge variant="soft" className="ml-0 sm:ml-1">
               {post.category}
             </Badge>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Calendar className="h-3.5 w-3.5" />
-              <span>{formatDate(post.date)}</span>
-            </div>
           </div>
 
-          <h3 className="text-base font-semibold leading-snug tracking-tight">
+          <h3 className="mt-1 line-clamp-2 text-[15px] font-semibold leading-snug tracking-tight group-hover:underline underline-offset-4">
             {post.title}
           </h3>
 
-          <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
+          <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
             {post.excerpt}
           </p>
 
-          <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
-            <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-              <Tag className="h-3.5 w-3.5" />
-              {post.readingMinutes} min
-            </span>
-            <div className="ml-auto flex flex-wrap gap-2">
-              {post.tags.slice(0, 2).map((t) => (
-                <Badge key={t} className="bg-primary/8 border-primary/15">
-                  {t}
-                </Badge>
-              ))}
-            </div>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {post.tags.slice(0, 3).map((t) => (
+              <span
+                key={t}
+                className="rounded-full bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground"
+              >
+                {t}
+              </span>
+            ))}
           </div>
         </div>
       </Link>

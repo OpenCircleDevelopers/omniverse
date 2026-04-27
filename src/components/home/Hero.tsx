@@ -5,8 +5,8 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden rounded-[2.5rem] border border-border/60 bg-card/50 shadow-[0_20px_70px_-45px_rgba(0,0,0,0.45)] backdrop-blur">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute -top-28 left-1/2 h-[520px] w-[880px] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/25 via-fuchsia-500/10 to-cyan-400/10 blur-3xl" />
-        <div className="absolute -bottom-28 -left-20 h-[320px] w-[320px] rounded-full bg-gradient-to-br from-emerald-400/10 via-cyan-400/10 to-primary/10 blur-3xl" />
+        <div className="absolute -top-28 left-1/2 h-[520px] w-[880px] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/20 via-background/0 to-accent/10 blur-3xl" />
+        <div className="absolute -bottom-28 -left-20 h-[320px] w-[320px] rounded-full bg-gradient-to-br from-accent/12 via-background/0 to-primary/12 blur-3xl" />
       </div>
 
       <div className="grid gap-10 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-12">

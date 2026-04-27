@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
-import { ButtonLink } from "@/components/ui/Button";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -20,18 +19,16 @@ export function Navbar() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="group inline-flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-2xl bg-gradient-to-br from-primary/90 to-cyan-400/70 shadow-sm">
-            <span className="text-sm font-semibold tracking-tight text-white">
-              O
-            </span>
+          <span className="grid h-9 w-9 place-items-center rounded-xl border border-border/70 bg-muted/40">
+            <span className="text-sm font-semibold tracking-tight text-foreground">O</span>
           </span>
           <div className="leading-tight">
             <div className="text-sm font-semibold tracking-tight">OmniVerse</div>
             <div className="text-[11px] text-muted-foreground">
-              Modern blogging, premium UI
+              Content-first publishing UI
             </div>
           </div>
         </Link>
@@ -56,11 +53,6 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <div className="hidden md:block">
-            <ButtonLink href="/blog" variant="primary" size="sm">
-              Explore posts
-            </ButtonLink>
-          </div>
 
           <button
             type="button"
@@ -97,17 +89,6 @@ export function Navbar() {
                 </Link>
               );
             })}
-          </div>
-          <div className="mt-3">
-            <ButtonLink
-              href="/blog"
-              variant="primary"
-              size="md"
-              className="w-full"
-              onClick={() => setOpen(false)}
-            >
-              Explore posts
-            </ButtonLink>
           </div>
         </div>
       </div>

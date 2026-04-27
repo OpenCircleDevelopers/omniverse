@@ -38,11 +38,6 @@ export default function RootLayout({
     >
       <body className="grain min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-foreground">
         <Providers>
-          <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-            <div className="absolute -top-24 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-primary/25 via-fuchsia-500/10 to-cyan-400/10 blur-3xl" />
-            <div className="absolute -bottom-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-gradient-to-br from-cyan-400/10 via-emerald-400/10 to-primary/10 blur-3xl" />
-          </div>
-
           <Navbar />
           <PageTransition>
             <main className="flex-1">{children}</main>

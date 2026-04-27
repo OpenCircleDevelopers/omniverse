@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Calendar, ChevronLeft } from "lucide-react";
 import { Container } from "@/components/site/Container";
@@ -8,16 +9,17 @@ import { AuthorCard } from "@/components/blog/AuthorCard";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
-}): Metadata {
-  const post = getPostBySlug(params.slug);
+  params: { slug: string } | Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await Promise.resolve(params);
+  const post = getPostBySlug(resolvedParams.slug);
   if (!post) return { title: "Post not found" };
   return {
     title: post.title,
@@ -25,8 +27,13 @@ export function generateMetadata({
   };
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogPostPage({
+  params,
+}: {
+  params: { slug: string } | Promise<{ slug: string }>;
+}) {
+  const resolvedParams = await Promise.resolve(params);
+  const post = getPostBySlug(resolvedParams.slug);
   if (!post) notFound();
 
   const related = getAllPosts()
@@ -45,7 +52,16 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         </Link>
 
         <header className="mt-6 overflow-hidden rounded-[2.5rem] border border-border/60 bg-card/50 shadow-sm backdrop-blur">
-          <div className={`h-56 w-full bg-gradient-to-br ${post.cover.gradient}`} />
+          <div className="relative h-56 w-full bg-muted/30">
+            <Image
+              src={post.thumbnail}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+            />
+          </div>
           <div className="p-8 md:p-10">
             <div className="flex flex-wrap items-center gap-3">
               <Badge variant="soft">{post.category}</Badge>
