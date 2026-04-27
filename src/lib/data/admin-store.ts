@@ -51,7 +51,7 @@ export type AdminMedia = {
   uploadedAt: string;
 };
 
-type AdminDB = {
+export type AdminDB = {
   posts: AdminPost[];
   users: AdminUser[];
   comments: AdminComment[];
